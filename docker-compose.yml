@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  nuxt:
+    build: ./nuxt-app
+    restart: always
+    ports:
+      - "3000:3000"
+    command:
+      "yarn dev"
+    container_name: cj-nuxt-app
+
+  nginx:
+    image: nginx:1.24
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+    depends_on:
+      - nuxt
+    container_name: cj-nginx
